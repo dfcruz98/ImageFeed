@@ -60,8 +60,8 @@ class FeedViewModel @Inject constructor(
             // the remaining ones are not canceled
             supervisorScope {
                 val call1 = async { repository.getPhotos("cats", 5) }
-                val call2 = async { repository.getPhotos("dogs", 5) }
-                val call3 = async { repository.getPhotos("birds", 5) }
+                val call2 = async { repository.getPhotos("dogs", 7) }
+                val call3 = async { repository.getPhotos("birds", 4) }
                 val call4 = async { repository.getPhotos("beach", 5) }
 
                 val response1 = call1.await()
@@ -73,18 +73,26 @@ class FeedViewModel @Inject constructor(
 
                 if (response1 is ActionResult.Success) {
                     list.add(Group("Cats", response1.data))
+                } else if (response1 is ActionResult.Error) {
+                    _errorLiveData.postValue(response1.message)
                 }
 
                 if (response2 is ActionResult.Success) {
                     list.add(Group("Dogs", response2.data))
+                } else if (response2 is ActionResult.Error) {
+                    _errorLiveData.postValue(response2.message)
                 }
 
                 if (response3 is ActionResult.Success) {
                     list.add(Group("Birds", response3.data))
+                } else if (response3 is ActionResult.Error) {
+                    _errorLiveData.postValue(response3.message)
                 }
 
                 if (response4 is ActionResult.Success) {
                     list.add(Group("Beach", response4.data))
+                } else if (response4 is ActionResult.Error) {
+                    _errorLiveData.postValue(response4.message)
                 }
 
                 _loading.value = false

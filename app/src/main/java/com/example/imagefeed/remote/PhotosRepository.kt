@@ -19,7 +19,11 @@ class PhotosRepository @Inject constructor(
             val response = api.searchPhotos("flickr.photos.search", tag, number)
             val content = response.body()
             if (response.isSuccessful && content != null) {
-                ActionResult.Success(content.response!!.photos)
+                if (content.stat == "fail") {
+                    ActionResult.Error("Occurred an error fetching data")
+                } else {
+                    ActionResult.Success(content.response!!.photos)
+                }
             } else {
                 ActionResult.Error(response.message())
             }

@@ -60,7 +60,7 @@ class FeedFragment : Fragment() {
 
         // Notify the user when occurred an error while fetching dta
         viewModel.errorLiveData.observe(viewLifecycleOwner) { error ->
-            Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, error, Snackbar.LENGTH_LONG).show()
         }
     }
 
