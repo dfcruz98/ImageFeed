@@ -1,0 +1,2 @@
+rootProject.name = "ImageFeed"
+include ':app'
